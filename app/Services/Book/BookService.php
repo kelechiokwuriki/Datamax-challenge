@@ -5,6 +5,7 @@ namespace App\Services\Book;
 use App\Book;
 use App\Repositories\Author\AuthorRepository;
 use App\Repositories\Book\BookRepository;
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -79,6 +80,19 @@ class BookService
 
         return empty($books) ? [] : $books;
     }
+
+
+    public function updateBook(array $bookData, int $bookId)
+    {
+        $updatedBook = $this->bookRepository->update($bookId, $bookData);
+
+        if ($updatedBook) {
+            return $this->bookRepository->find($bookId);
+        }
+
+        return [];
+    }
+
 
     private function createAuthorAndAttachToBook(Book $book, array $authors)
     {

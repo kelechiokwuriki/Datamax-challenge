@@ -63,4 +63,24 @@ class BookController extends Controller
             return $this->sendError('unable to create book', [], 400);
         }
     }
+
+    public function update(Request $request, int $bookId)
+    {
+        if (!$bookId) {
+            return $this->sendError('Book ID missing', [], 400);
+        }
+
+        try {
+            $book = $this->bookService->updateBook($request->all(), $bookId);
+
+            $message = 'The book '. $book->name. ' was updated successfully';
+
+            return $this->sendResponse($message, $book, 200);
+
+        } catch (Exception $e) {
+            Log::error('Failed to update book. Error: '. $e->getMessage());
+            return $this->sendError('unable to update book', [], 400);
+        }
+    }
+
 }

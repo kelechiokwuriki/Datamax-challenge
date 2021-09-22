@@ -4,6 +4,7 @@ namespace App\Repositories\Base;
 use App\Repositories\Base\Repository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class BaseRepository implements Repository
 {
@@ -26,7 +27,13 @@ abstract class BaseRepository implements Repository
 
     public function update($id, array $data): bool
     {
-        return $this->model->find($id)->update($data);
+        $result = $this->model->find($id);
+
+        if ($result) {
+            return $result->update($data);
+        }
+
+        throw new ModelNotFoundException('Resource with id '. $id. ' does not exist');
     }
 
     public function all(): Collection
