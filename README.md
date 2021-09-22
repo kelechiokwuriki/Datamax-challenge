@@ -7,3 +7,4 @@ Run the following commands after navigating to the project directory on your ter
 - php artisan serve
 
 # API DOC
+https://documenter.getpostman.com/view/1893514/UUxwBTuq
