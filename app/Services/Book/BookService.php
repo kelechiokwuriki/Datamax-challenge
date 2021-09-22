@@ -34,9 +34,29 @@ class BookService
     public function queryExternalBook(string $nameQuery)
     {
         $baseApi = config('app.external_books_api');
+        $url = $baseApi.'/api/books/?name='.$nameQuery;
 
-        $response = Http::get('http://test.com');
+        $response = Http::get($url);
+        $apiResponseResult = $response->json();
 
+        $result = array_map(function ($res) {
+            unset($res['url']);
+            $res['number_of_pages'] = $res['numberOfPages'];
+
+            unset($res['numberOfPages']);
+            unset($res['mediaType']);
+
+            $res['release_date'] = $res['released'];
+            unset($res['released']);
+
+            unset($res['characters']);
+            unset($res['povCharacters']);
+
+            return $res;
+
+        }, $apiResponseResult);
+
+        return $result;
     }
 
     private function createAuthorAndAttachToBook(Book $book, array $authors)
