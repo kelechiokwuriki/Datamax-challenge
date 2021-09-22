@@ -1969,18 +1969,113 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      books: []
+      books: [],
+      bookModalData: {
+        id: null,
+        name: null,
+        isbn: null,
+        release_date: null,
+        country: null,
+        number_of_pages: null,
+        publisher: null
+      }
     };
   },
   methods: {
-    getBooks: function getBooks() {
+    showUpdateBookModal: function showUpdateBookModal(book) {
+      this.bookModalData.id = book.id;
+      this.bookModalData.name = book.name;
+      this.bookModalData.isbn = book.isbn;
+      this.bookModalData.release_date = book.release_date;
+      this.bookModalData.country = book.country;
+      this.bookModalData.number_of_pages = book.number_of_pages;
+      this.bookModalData.publisher = book.publisher;
+    },
+    getBookIndexFromBooksArray: function getBookIndexFromBooksArray() {
       var _this = this;
 
+      return this.books.findIndex(function (book) {
+        return book.id === _this.bookModalData.id;
+      });
+    },
+    updateBook: function updateBook() {
+      var _this2 = this;
+
+      axios.patch("/api/v1/books/".concat(this.bookModalData.id), this.bookModalData).then(function (response) {
+        if (response.data.status_code === 200) {
+          var bookIndex = _this2.getBookIndexFromBooksArray();
+
+          _this2.books[bookIndex].name = _this2.bookModalData.name;
+          _this2.books[bookIndex].isbn = _this2.bookModalData.isbn;
+          _this2.books[bookIndex].release_date = _this2.bookModalData.release_date;
+          _this2.books[bookIndex].country = _this2.bookModalData.country;
+          _this2.books[bookIndex].number_of_pages = _this2.bookModalData.number_of_pages;
+          _this2.books[bookIndex].publisher = _this2.bookModalData.publisher;
+          $('.updateBookModal').hide();
+          $('body').removeClass('modal-open');
+          $('.modal-backdrop').remove();
+        }
+      });
+    },
+    deleteBook: function deleteBook(bookId) {
+      axios["delete"]("/api/v1/books/".concat(bookId)).then(function (response) {});
+    },
+    getBooks: function getBooks() {
+      var _this3 = this;
+
       axios.get('/api/v1/books').then(function (response) {
-        _this.books = response.data.data.data;
+        _this3.books = response.data.data.data;
       });
     }
   },
@@ -37711,7 +37806,45 @@ var render = function() {
         return _c("div", { key: index, staticClass: "col-md-4" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v(_vm._s(book.name))
+              _c("div", { staticClass: "d-flex justify-content-between" }, [
+                _c("div", [
+                  _c("h5", { staticClass: "card-title" }, [
+                    _vm._v(_vm._s(book.name))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: {
+                        "data-bs-toggle": "modal",
+                        "data-bs-target": "#updateBookModal"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.showUpdateBookModal(book)
+                        }
+                      }
+                    },
+                    [_vm._v("Update")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteBook(book.id)
+                        }
+                      }
+                    },
+                    [_vm._v("Delete")]
+                  )
+                ])
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
@@ -37748,6 +37881,235 @@ var render = function() {
         ])
       }),
       0
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade updateBookModal",
+        attrs: {
+          id: "updateBookModal",
+          tabindex: "-1",
+          "aria-labelledby": "updateBookModal",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "h5",
+                {
+                  staticClass: "modal-title",
+                  attrs: { id: "exampleModalLabel" }
+                },
+                [_vm._v("Update " + _vm._s(_vm.bookModalData.name))]
+              ),
+              _vm._v(" "),
+              _c("button", {
+                staticClass: "btn-close",
+                attrs: {
+                  type: "button",
+                  "data-bs-dismiss": "modal",
+                  "aria-label": "Close"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("form", [
+                _c("div", { staticClass: "mb-2" }, [
+                  _c(
+                    "label",
+                    { staticClass: "form-label", attrs: { for: "bookName" } },
+                    [_vm._v("Name")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.bookModalData.name,
+                        expression: "bookModalData.name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "bookName",
+                      "aria-describedby": "bookName"
+                    },
+                    domProps: { value: _vm.bookModalData.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.bookModalData, "name", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mb-2" }, [
+                  _c(
+                    "label",
+                    { staticClass: "form-label", attrs: { for: "bookIsbn" } },
+                    [_vm._v("ISBN")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.bookModalData.isbn,
+                        expression: "bookModalData.isbn"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "bookIsbn" },
+                    domProps: { value: _vm.bookModalData.isbn },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.bookModalData, "isbn", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mb-2" }, [
+                  _c(
+                    "label",
+                    { staticClass: "form-label", attrs: { for: "country" } },
+                    [_vm._v("Country")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.bookModalData.country,
+                        expression: "bookModalData.country"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "country" },
+                    domProps: { value: _vm.bookModalData.country },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.bookModalData,
+                          "country",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mb-2" }, [
+                  _c(
+                    "label",
+                    { staticClass: "form-label", attrs: { for: "country" } },
+                    [_vm._v("Number of pages")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.bookModalData.number_of_pages,
+                        expression: "bookModalData.number_of_pages"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "country" },
+                    domProps: { value: _vm.bookModalData.number_of_pages },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.bookModalData,
+                          "number_of_pages",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mb-2" }, [
+                  _c(
+                    "label",
+                    { staticClass: "form-label", attrs: { for: "country" } },
+                    [_vm._v("Release date")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.bookModalData.release_date,
+                        expression: "bookModalData.release_date"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "country" },
+                    domProps: { value: _vm.bookModalData.release_date },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.bookModalData,
+                          "release_date",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-bs-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: { click: _vm.updateBook }
+                },
+                [_vm._v("Save changes")]
+              )
+            ])
+          ])
+        ])
+      ]
     )
   ])
 }
@@ -50037,6 +50399,8 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
