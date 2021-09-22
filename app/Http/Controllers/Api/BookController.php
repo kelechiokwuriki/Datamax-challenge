@@ -36,6 +36,21 @@ class BookController extends Controller
         }
     }
 
+    public function index(Request $request)
+    {
+        $search = $request->query('search');
+
+        try {
+            $books = $this->bookService->getAllBooks($search);
+
+            return $this->sendResponse('success', $books, 200);
+
+        } catch (Exception $e) {
+            Log::error('Failed to get books. Error: '. $e->getMessage());
+            return $this->sendError('Failed to get books', [], 400);
+        }
+    }
+
     public function store(Request $request)
     {
         try {

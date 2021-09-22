@@ -39,6 +39,10 @@ class BookService
         $response = Http::get($url);
         $apiResponseResult = $response->json();
 
+        if (empty($apiResponseResult)) {
+            return [];
+        }
+
         $result = array_map(function ($res) {
             unset($res['url']);
             $res['number_of_pages'] = $res['numberOfPages'];
@@ -57,6 +61,23 @@ class BookService
         }, $apiResponseResult);
 
         return $result;
+    }
+
+    public function getAllBooks($searchTerm = null)
+    {
+        $books = null;
+
+        if ($searchTerm !== null) {
+            $books = $this->bookRepository->where('name', $searchTerm)
+                ->orWhere('country', $searchTerm)
+                ->orWhere('publisher', $searchTerm)
+                ->orWhere('release_date', 'like', '%' . $searchTerm . '%')->get();
+
+        } else {
+            $books = $this->bookRepository->all();
+        }
+
+        return empty($books) ? [] : $books;
     }
 
     private function createAuthorAndAttachToBook(Book $book, array $authors)
