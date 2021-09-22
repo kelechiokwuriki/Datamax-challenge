@@ -13,6 +13,12 @@
                         <p>Publisher: {{ book.publisher }}</p>
                         <p>Country: {{ book.country }}</p>
                         <p>Release Date: {{ book.release_date }}</p>
+
+                        <p>Authors:
+                            <span v-for="(author, index) in book.authors" v-bind:key="index">
+                                {{ author.name }},
+                            </span>
+                        </p>
                     </div>
                 </div>
             </div>

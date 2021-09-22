@@ -20,6 +20,11 @@ abstract class BaseRepository implements Repository
         return $this->model->findOrFail($id);
     }
 
+    public function with(string $relationship)
+    {
+        return $this->model->with($relationship);
+    }
+
     public function returnPaginated(int $paginateAmount)
     {
         return $this->model->paginate($paginateAmount);

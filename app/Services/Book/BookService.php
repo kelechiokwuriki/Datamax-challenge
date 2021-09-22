@@ -69,16 +69,16 @@ class BookService
         $books = null;
 
         if ($searchTerm !== null) {
-            $books = $this->bookRepository->where('name', $searchTerm)
+            $books = $this->bookRepository->with('authors')->where('name', $searchTerm)
                 ->orWhere('country', $searchTerm)
                 ->orWhere('publisher', $searchTerm)
                 ->orWhere('release_date', 'like', '%' . $searchTerm . '%')->get();
 
         } else {
             if ($amountOfBooks > 0) {
-                $books = $this->bookRepository->returnPaginated($amountOfBooks);
+                $books = $this->bookRepository->with('authors')->paginate($amountOfBooks);
             } else {
-                $books = $this->bookRepository->all();
+                $books = $this->bookRepository->with('authors')->all();
             }
         }
 

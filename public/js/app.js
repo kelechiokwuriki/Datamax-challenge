@@ -1963,6 +1963,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -37719,7 +37725,24 @@ var render = function() {
               _vm._v(" "),
               _c("p", [_vm._v("Country: " + _vm._s(book.country))]),
               _vm._v(" "),
-              _c("p", [_vm._v("Release Date: " + _vm._s(book.release_date))])
+              _c("p", [_vm._v("Release Date: " + _vm._s(book.release_date))]),
+              _vm._v(" "),
+              _c(
+                "p",
+                [
+                  _vm._v("Authors:\n                        "),
+                  _vm._l(book.authors, function(author, index) {
+                    return _c("span", { key: index }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(author.name) +
+                          ",\n                        "
+                      )
+                    ])
+                  })
+                ],
+                2
+              )
             ])
           ])
         ])
