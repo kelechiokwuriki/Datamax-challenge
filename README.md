@@ -13,5 +13,8 @@ Open a new terminal tab and run the following command
 
  - npm install && npm run dev
 
+# UNIT TEST
+Open a new terminal tab and run:
+ - ./vendor/bin/phpunit
 # API DOC
 https://documenter.getpostman.com/view/1893514/UUxwBTuq
