@@ -17,6 +17,27 @@ class BookController extends Controller
         $this->bookService = $bookService;
     }
 
+    public function queryExternalBook(Request $request)
+    {
+        $nameQuery = $request->query('name');
+
+        if (!$nameQuery) {
+            return $this->sendError('Name query missing', [], 400);
+        }
+
+        try {
+            $booksQueried = $this->bookService->queryExternalBook($nameQuery);
+
+            return $this->sendResponse('success', $booksQueried, 200);
+
+        } catch (Exception $e) {
+            Log::error('Failed to query book. Error: '. $e->getMessage());
+            return $this->sendError('Failed to query book', [], 400);
+        }
+
+
+    }
+
     public function store(Request $request)
     {
         try {

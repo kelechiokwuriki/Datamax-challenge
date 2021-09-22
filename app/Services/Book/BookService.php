@@ -5,6 +5,7 @@ namespace App\Services\Book;
 use App\Book;
 use App\Repositories\Author\AuthorRepository;
 use App\Repositories\Book\BookRepository;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class BookService
@@ -28,6 +29,14 @@ class BookService
         $this->createAuthorAndAttachToBook($bookCreated, $authors);
 
         return $bookCreated;
+    }
+
+    public function queryExternalBook(string $nameQuery)
+    {
+        $baseApi = config('app.external_books_api');
+
+        $response = Http::get('http://test.com');
+
     }
 
     private function createAuthorAndAttachToBook(Book $book, array $authors)

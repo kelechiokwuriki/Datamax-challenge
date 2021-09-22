@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'external_books_api' => env('EXTERNAL_BOOKS_API'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
