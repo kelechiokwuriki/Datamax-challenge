@@ -69,7 +69,7 @@
         </style>
     </head>
     <body>
-        <div id="app">
+        <div id="app" class="mt-4">
             <home-component></home-component>
         </div>
     </body>

@@ -2020,6 +2020,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -37896,9 +37897,7 @@ var render = function() {
           }),
           0
         )
-      : _c("div", { staticClass: "text-center" }, [
-          _c("h1", [_vm._v("No books to display.")])
-        ]),
+      : _c("div", { staticClass: "text-center" }, [_vm._m(0)]),
     _vm._v(" "),
     _c(
       "div",
@@ -38130,7 +38129,27 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", [
+      _vm._v("No books to display. Kindly use the "),
+      _c(
+        "a",
+        {
+          attrs: {
+            href: "https://documenter.getpostman.com/view/1893514/UUxwBTuq",
+            target: "_blank"
+          }
+        },
+        [_vm._v("API")]
+      ),
+      _vm._v("\n            to add a book")
+    ])
+  }
+]
 render._withStripped = true
 
 

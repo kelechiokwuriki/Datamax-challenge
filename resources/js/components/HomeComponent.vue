@@ -33,7 +33,8 @@
             </div>
         </div>
         <div class="text-center" v-else>
-            <h1>No books to display.</h1>
+            <h1>No books to display. Kindly use the <a href="https://documenter.getpostman.com/view/1893514/UUxwBTuq" target="_blank">API</a>
+                to add a book</h1>
         </div>
 
         <div class="modal fade updateBookModal" id="updateBookModal" tabindex="-1" aria-labelledby="updateBookModal" aria-hidden="true">
