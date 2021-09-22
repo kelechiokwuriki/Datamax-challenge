@@ -93,6 +93,11 @@ class BookService
         return [];
     }
 
+    public function getBookById(int $bookId)
+    {
+        return $this->bookRepository->find($bookId);
+    }
+
     public function deleteBook(int $bookId)
     {
         $book = $this->bookRepository->find($bookId);

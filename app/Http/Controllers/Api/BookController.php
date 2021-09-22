@@ -66,6 +66,10 @@ class BookController extends Controller
 
     public function destroy(int $bookId)
     {
+        if (!$bookId) {
+            return $this->sendError('Book ID missing', [], 400);
+        }
+
         try {
             $book = $this->bookService->deleteBook($bookId);
 
@@ -76,6 +80,23 @@ class BookController extends Controller
         } catch (Exception $e) {
             Log::error('Failed to create book. Error: '. $e->getMessage());
             return $this->sendError('unable to create book', [], 400);
+        }
+    }
+
+    public function show(int $bookId)
+    {
+        if (!$bookId) {
+            return $this->sendError('Book ID missing', [], 400);
+        }
+
+        try {
+            $book = $this->bookService->getBookById($bookId);
+
+            return $this->sendResponse('', $book, 'success', 200);
+
+        } catch (Exception $e) {
+            Log::error('Failed to fetch book. Error: '. $e->getMessage());
+            return $this->sendError('Failed to fetch book', [], 400);
         }
     }
 
