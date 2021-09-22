@@ -93,6 +93,16 @@ class BookService
         return [];
     }
 
+    public function deleteBook(int $bookId)
+    {
+        $book = $this->bookRepository->find($bookId);
+
+        if ($book && $this->bookRepository->delete($bookId)) {
+            return $book;
+        }
+
+        return [];
+    }
 
     private function createAuthorAndAttachToBook(Book $book, array $authors)
     {

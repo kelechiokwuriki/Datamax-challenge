@@ -64,6 +64,21 @@ class BookController extends Controller
         }
     }
 
+    public function destroy(int $bookId)
+    {
+        try {
+            $book = $this->bookService->deleteBook($bookId);
+
+            $message = 'The book '. $book->name. ' was deleted successfully';
+
+            return $this->sendResponse($message, [], 'success', 204);
+
+        } catch (Exception $e) {
+            Log::error('Failed to create book. Error: '. $e->getMessage());
+            return $this->sendError('unable to create book', [], 400);
+        }
+    }
+
     public function update(Request $request, int $bookId)
     {
         if (!$bookId) {
@@ -75,7 +90,7 @@ class BookController extends Controller
 
             $message = 'The book '. $book->name. ' was updated successfully';
 
-            return $this->sendResponse($message, $book, 200);
+            return $this->sendResponse($message, $book, 'success', 200);
 
         } catch (Exception $e) {
             Log::error('Failed to update book. Error: '. $e->getMessage());
