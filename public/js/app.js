@@ -2017,6 +2017,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2069,13 +2072,21 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     deleteBook: function deleteBook(bookId) {
-      axios["delete"]("/api/v1/books/".concat(bookId)).then(function (response) {});
-    },
-    getBooks: function getBooks() {
       var _this3 = this;
 
+      axios["delete"]("/api/v1/books/".concat(bookId)).then(function (response) {
+        if (response.data.status_code === 204) {
+          var index = _this3.getBookIndexFromBooksArray();
+
+          _this3.books.splice(index, 1);
+        }
+      });
+    },
+    getBooks: function getBooks() {
+      var _this4 = this;
+
       axios.get('/api/v1/books').then(function (response) {
-        _this3.books = response.data.data.data;
+        _this4.books = response.data.data.data;
       });
     }
   },
@@ -37799,89 +37810,95 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row" },
-      _vm._l(_vm.books, function(book, index) {
-        return _c("div", { key: index, staticClass: "col-md-4" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _c("div", { staticClass: "d-flex justify-content-between" }, [
-                _c("div", [
-                  _c("h5", { staticClass: "card-title" }, [
-                    _vm._v(_vm._s(book.name))
+    _vm.books.length > 0
+      ? _c(
+          "div",
+          { staticClass: "row" },
+          _vm._l(_vm.books, function(book, index) {
+            return _c("div", { key: index, staticClass: "col-md-4" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-header" }, [
+                  _c("div", { staticClass: "d-flex justify-content-between" }, [
+                    _c("div", [
+                      _c("h5", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(book.name))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: {
+                            "data-bs-toggle": "modal",
+                            "data-bs-target": "#updateBookModal"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.showUpdateBookModal(book)
+                            }
+                          }
+                        },
+                        [_vm._v("Update")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteBook(book.id)
+                            }
+                          }
+                        },
+                        [_vm._v("Delete")]
+                      )
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: {
-                        "data-bs-toggle": "modal",
-                        "data-bs-target": "#updateBookModal"
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.showUpdateBookModal(book)
-                        }
-                      }
-                    },
-                    [_vm._v("Update")]
-                  ),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("p", [_vm._v("ISBN: " + _vm._s(book.isbn))]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("No. of pages: " + _vm._s(book.number_of_pages))
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Publisher: " + _vm._s(book.publisher))]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Country: " + _vm._s(book.country))]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("Release Date: " + _vm._s(book.release_date))
+                  ]),
                   _vm._v(" "),
                   _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      on: {
-                        click: function($event) {
-                          return _vm.deleteBook(book.id)
-                        }
-                      }
-                    },
-                    [_vm._v("Delete")]
+                    "p",
+                    [
+                      _vm._v("Authors:\n                        "),
+                      _vm._l(book.authors, function(author, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(author.name) +
+                              ",\n                        "
+                          )
+                        ])
+                      })
+                    ],
+                    2
                   )
                 ])
               ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("p", [_vm._v("ISBN: " + _vm._s(book.isbn))]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v("No. of pages: " + _vm._s(book.number_of_pages))
-              ]),
-              _vm._v(" "),
-              _c("p", [_vm._v("Publisher: " + _vm._s(book.publisher))]),
-              _vm._v(" "),
-              _c("p", [_vm._v("Country: " + _vm._s(book.country))]),
-              _vm._v(" "),
-              _c("p", [_vm._v("Release Date: " + _vm._s(book.release_date))]),
-              _vm._v(" "),
-              _c(
-                "p",
-                [
-                  _vm._v("Authors:\n                        "),
-                  _vm._l(book.authors, function(author, index) {
-                    return _c("span", { key: index }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(author.name) +
-                          ",\n                        "
-                      )
-                    ])
-                  })
-                ],
-                2
-              )
             ])
-          ])
-        ])
-      }),
-      0
-    ),
+          }),
+          0
+        )
+      : _c("div", { staticClass: "text-center" }, [
+          _c("h1", [_vm._v("No books to display.")])
+        ]),
     _vm._v(" "),
     _c(
       "div",

@@ -2,7 +2,7 @@
     <div class="container">
         <h1>Books</h1>
         <hr>
-        <div class="row">
+        <div class="row" v-if="books.length > 0">
             <div class="col-md-4" v-for="(book, index) in books" v-bind:key="index">
                 <div class="card">
                     <div class="card-header">
@@ -31,6 +31,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="text-center" v-else>
+            <h1>No books to display.</h1>
         </div>
 
         <div class="modal fade updateBookModal" id="updateBookModal" tabindex="-1" aria-labelledby="updateBookModal" aria-hidden="true">
@@ -127,7 +130,10 @@
 
             deleteBook(bookId) {
                 axios.delete(`/api/v1/books/${bookId}`).then(response => {
-
+                    if (response.data.status_code === 204) {
+                        let index = this.getBookIndexFromBooksArray();
+                        this.books.splice(index, 1);
+                    }
                 })
             },
 
