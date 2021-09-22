@@ -20,6 +20,11 @@ abstract class BaseRepository implements Repository
         return $this->model->findOrFail($id);
     }
 
+    public function returnPaginated(int $paginateAmount)
+    {
+        return $this->model->paginate($paginateAmount);
+    }
+
     public function create(array $data): Model
     {
         return $this->model->create($data);

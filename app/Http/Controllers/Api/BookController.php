@@ -41,7 +41,7 @@ class BookController extends Controller
         $search = $request->query('search');
 
         try {
-            $books = $this->bookService->getAllBooks($search);
+            $books = $this->bookService->getAllBooks($search, 10);
 
             return $this->sendResponse('success', $books, 200);
 

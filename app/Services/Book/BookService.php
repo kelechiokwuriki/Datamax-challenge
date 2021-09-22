@@ -64,7 +64,7 @@ class BookService
         return $result;
     }
 
-    public function getAllBooks($searchTerm = null)
+    public function getAllBooks($searchTerm = null, int $amountOfBooks = 0)
     {
         $books = null;
 
@@ -75,7 +75,11 @@ class BookService
                 ->orWhere('release_date', 'like', '%' . $searchTerm . '%')->get();
 
         } else {
-            $books = $this->bookRepository->all();
+            if ($amountOfBooks > 0) {
+                $books = $this->bookRepository->returnPaginated($amountOfBooks);
+            } else {
+                $books = $this->bookRepository->all();
+            }
         }
 
         return empty($books) ? [] : $books;

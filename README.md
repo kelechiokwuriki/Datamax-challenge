@@ -13,6 +13,5 @@ Open a new terminal tab and run the following command
 
  - npm install && npm run dev
 
-
 # API DOC
 https://documenter.getpostman.com/view/1893514/UUxwBTuq
